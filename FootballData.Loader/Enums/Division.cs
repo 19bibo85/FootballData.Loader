@@ -1,0 +1,38 @@
+﻿namespace FootballData.Loader.Enums
+{
+    public enum Division : byte
+    {
+        PremierLeague,
+        Championship,
+        League1,
+        League2,
+        Conference,
+        Division1,
+        Division2,
+        Division3,
+        Bundesliga1,
+        Bundesliga2,
+        SerieA,
+        SerieB,
+        LaLigaPrimeraDivision,
+        LaLigaSegundaDivision,
+        LeChampionnat,
+        Eredivisie,
+        JupilerLeague,
+        LigaI,
+        FutbolLigi1,
+        EthnikiKatigoria,
+        LigaProfesional,
+        MLS,
+        SuperLeague,
+        SuperLiga,
+        Veikkausliiga,
+        PremierDivision,
+        J1League,
+        LigaMX,
+        Eliteserien,
+        Ekstraklasa,
+        Liga1,
+        Allsvenskan
+    }
+}

@@ -1,0 +1,33 @@
+﻿namespace FootballData.Loader.Enums
+{
+    public enum Country : byte
+    {
+        England,
+        Scotland,
+        Germany,
+        Italy,
+        Spain,
+        France,
+        Netherlands,
+        Belgium,
+        Portugal,
+        Turkey,
+        Greece,
+        Argentina,
+        Austria,
+        Brazil,
+        China,
+        Denmark,
+        Finland,
+        Ireland,
+        Japan,
+        Mexico,
+        Norway,
+        Poland,
+        Romania,
+        Russia,
+        Sweden,
+        Switzerland,
+        USA
+    }
+}
