@@ -3,6 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/19bibo85/FootballData.Loader</RepositoryUrl>
+    <PackageTags>football;parser;</PackageTags>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Title>FootballData.Loader</Title>
+    <Description>Library to download football data from football-data.co.uk site</Description>
+    <Authors>Alberto Tosi Brandi</Authors>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
