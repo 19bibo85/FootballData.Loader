@@ -60,9 +60,8 @@ namespace FootballData.Loader.Tests
             };
 
             var result = await Loader.LoadStatsAsync(param);
-
             Assert.Equal("I1", result.Data[0].Div);
-            Assert.Equal(DateTime.Parse("24/08/13"), result.Data[0].Date);
+            Assert.Equal(new DateTime(2013,08,24), result.Data[0].Date);
             Assert.Equal("Sampdoria", result.Data[0].HomeTeam);
             Assert.Equal("Juventus", result.Data[0].AwayTeam);
             Assert.Equal(0, result.Data[0].FTHG);
