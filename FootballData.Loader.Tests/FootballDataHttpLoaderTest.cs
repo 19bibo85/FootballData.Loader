@@ -1,7 +1,6 @@
 ﻿using FootballData.Loader.Enums;
 using FootballData.Loader.Loaders;
 using FootballData.Loader.Models;
-using System.Reflection;
 using Xunit;
 
 namespace FootballData.Loader.Tests
@@ -11,7 +10,7 @@ namespace FootballData.Loader.Tests
         #region Private Members
 
         private readonly FootballDataHttpLoader Loader;
-        private static readonly string DownloadPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, "output");
+        private static readonly string DownloadPath = "output";
 
         #endregion
 

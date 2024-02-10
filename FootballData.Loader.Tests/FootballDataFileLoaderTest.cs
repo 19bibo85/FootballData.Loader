@@ -1,7 +1,6 @@
 ﻿using FootballData.Loader.Enums;
 using FootballData.Loader.Loaders;
 using FootballData.Loader.Models;
-using System.Reflection;
 using Xunit;
 
 namespace FootballData.Loader.Tests
@@ -18,8 +17,7 @@ namespace FootballData.Loader.Tests
 
         public FootballDataFileLoaderTest()
         {
-            var curentPath = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
-            Loader = new FootballDataFileLoader(Path.Combine(curentPath ?? string.Empty, "resources"));
+            Loader = new FootballDataFileLoader("resources");
         }
 
         #endregion
