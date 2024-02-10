@@ -1,6 +1,7 @@
 ﻿using FootballData.Loader.Enums;
 using FootballData.Loader.Loaders;
 using FootballData.Loader.Models;
+using System.Globalization;
 using Xunit;
 
 namespace FootballData.Loader.Tests
@@ -18,6 +19,8 @@ namespace FootballData.Loader.Tests
 
         public FootballDataHttpLoaderTest()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-IE");
+
             var client = HttpLoader
                 .Create()
                 .WithBrowserName(string.Empty)
