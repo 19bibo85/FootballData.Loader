@@ -1,6 +1,6 @@
 # FootballData.Loader
 
-It's a `.NET` library that allows you to download and parse the **CSV** files hosted on [football-data.co.uk](https://www.football-data.co.uk) or to load the files from a local path.
+It's a 	![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white) library that allows you to download and parse the **CSV** files hosted on [football-data.co.uk](https://www.football-data.co.uk) or to load the files from a local path.
 
 ## How to download historical data files?
 
