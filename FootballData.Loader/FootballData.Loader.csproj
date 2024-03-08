@@ -11,6 +11,7 @@
     <Title>FootballData.Loader</Title>
     <Description>Library to download football data from football-data.co.uk site</Description>
     <Authors>Alberto Tosi Brandi</Authors>
+    <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -110,27 +110,27 @@ namespace FootballData.Loader.Loaders
 
         #region Validations
 
-        private FootballDataResult<IEnumerable<FootballDataConfiguration>> ValidateDivisions(Dictionary<Country, IEnumerable<FootballDataConfiguration>> countriesDivisions, FootballDataParams dParams) 
+        private FootballDataResult<IEnumerable<FootballDataConfiguration>> ValidateDivisions(Dictionary<Country, IEnumerable<FootballDataConfiguration>> countryConfiguration, FootballDataParams dParams) 
         {
             var result = new FootballDataResult<IEnumerable<FootballDataConfiguration>>();
 
-            var footballDataDivisions = countriesDivisions.Filter(dParams);
-            if (!footballDataDivisions.Any()) 
+            var configuration = countryConfiguration.Filter(dParams);
+            if (!configuration.Any()) 
             {
                 result.Success = false;
-                result.Message = $"No divisions were found for country {dParams.Country}";
+                result.Message = $"No divisions were found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
                 return result;
             }
 
-            footballDataDivisions = footballDataDivisions.Filter(dParams);
-            if (!footballDataDivisions.Any())
+            configuration = configuration.Filter(dParams);
+            if (!configuration.Any())
             {
                 result.Success = false;
-                result.Message = $"{dParams.Division} was not found for country {dParams.Country}";
+                result.Message = $"Division{(!dParams.Division.HasValue ? "" : $" {dParams.Division}")} was not found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
                 return result;
             }
 
-            result.Data = footballDataDivisions;
+            result.Data = configuration;
 
             return result;
         }
@@ -143,7 +143,7 @@ namespace FootballData.Loader.Loaders
             if (!locations.Any()) 
             {
                 result.Success = false;
-                result.Message = $"No {LocationName[loaderType]} were found for country {dParams.Country}";
+                result.Message = $"No {LocationName[loaderType]} were found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
                 return result;
             }
 
@@ -151,7 +151,7 @@ namespace FootballData.Loader.Loaders
             if (!locations.Any())
             {
                 result.Success = false;
-                result.Message = $"No {LocationName[loaderType]} were found in years from: {dParams.FromYear} - to: {dParams.ToYear} for country {dParams.Country}";
+                result.Message = $"No {LocationName[loaderType]} were found{(!dParams.FromYear.HasValue ? "" : $" from year: {dParams.FromYear}")}{(!dParams.ToYear.HasValue ? "" : $" to year: {dParams.ToYear}")}{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
                 return result;
             }
 
@@ -174,7 +174,7 @@ namespace FootballData.Loader.Loaders
             if (!footballDataEntries.Any())
             {
                 result.Success = false;
-                result.Message = $"No entries were found for country: {dParams.Country} and division: {dParams.Division} in years from: {dParams.FromYear} - to: {dParams.ToYear} for country {dParams.Country}";
+                result.Message = $"No entries were found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}{(!dParams.Division.HasValue ? "" : $" for division {dParams.Division}")}{(!dParams.FromYear.HasValue ? "" : $" from year: {dParams.FromYear}")}{(!dParams.ToYear.HasValue ? "" : $" to year: {dParams.ToYear}")}";
                 return result;
             }
 

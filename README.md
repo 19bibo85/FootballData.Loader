@@ -9,7 +9,7 @@ You can download the **CSV** files by creating an instance of the `HttpClient` c
 ```cs
 var client = HttpLoader
     .Create()
-    .WithBrowserName(string.Empty)
+    .WithBrowserName("your-browser")
     .Build();  	
 	
 var downloader = new FootballDataHttpLoader(client);

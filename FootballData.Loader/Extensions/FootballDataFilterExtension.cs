@@ -8,34 +8,34 @@ namespace FootballData.Loader.Extensions
 {
     internal static class FootballDataFilterExtension
     {
-        internal static IEnumerable<FootballDataConfiguration> Filter(this Dictionary<Country, IEnumerable<FootballDataConfiguration>> countriesDivisions, FootballDataParams dParams)
+        internal static IEnumerable<FootballDataConfiguration> Filter(this Dictionary<Country, IEnumerable<FootballDataConfiguration>> countryConfiguration, FootballDataParams dParams)
         {
             var result = Enumerable.Empty<FootballDataConfiguration>();
 
             if (dParams.Country.HasValue)
             {
-                result = countriesDivisions[dParams.Country.Value];
+                result = countryConfiguration[dParams.Country.Value];
             }
             else 
             {
-                result = countriesDivisions.SelectMany(s => s.Value);
+                result = countryConfiguration.SelectMany(s => s.Value);
             }
 
             return result;
         }
 
-        internal static IEnumerable<FootballDataConfiguration> Filter(this IEnumerable<FootballDataConfiguration> footballDataConfiguration, FootballDataParams dParams)
+        internal static IEnumerable<FootballDataConfiguration> Filter(this IEnumerable<FootballDataConfiguration> configuration, FootballDataParams dParams)
         {
-            var result = footballDataConfiguration;
+            var result = configuration;
 
             if (dParams.Country.HasValue && dParams.Division.HasValue)
             {
-                result = footballDataConfiguration.Where(a => !a.Division.HasValue || a.Division == dParams.Division.Value);
+                result = configuration.Where(a => !a.Division.HasValue || a.Division == dParams.Division.Value);
             }
 
             if (!dParams.Country.HasValue && dParams.Division.HasValue)
             {
-                result = footballDataConfiguration.Where(a => a.Division == dParams.Division.Value);
+                result = configuration.Where(a => a.Division == dParams.Division.Value);
             }
 
             return result;
