@@ -1,4 +1,5 @@
 ﻿using FootballData.Loader.Enums;
+using FootballData.Loader.Errors;
 using FootballData.Loader.Extensions;
 using FootballData.Loader.Models;
 using FootballData.Loader.Parsers;
@@ -16,8 +17,6 @@ namespace FootballData.Loader.Loaders
 
         internal readonly FootballDataParser Parser;
 
-        internal delegate Task<IEnumerable<FootballDataEntry>> Execute(string path);
-
         #endregion
 
         #region Constructor
@@ -31,7 +30,7 @@ namespace FootballData.Loader.Loaders
 
         #region Process
 
-        internal async Task<FootballDataResult<List<FootballDataEntry>>> Process(DataType dataType, LoaderType loaderType, FootballDataParams dParams, Execute execute)
+        internal async Task<FootballDataResult<List<FootballDataEntry>>> Process(DataType dataType, LoaderType loaderType, FootballDataParams dParams)
         {
             if (dParams == null)
                 throw new NullReferenceException($"A {nameof(FootballDataParams)} reference must be provided!");
@@ -50,7 +49,7 @@ namespace FootballData.Loader.Loaders
             {                    
                 try
                 {
-                    var entriesResult = ValidateFootballDataEntries(await execute(location), dParams);
+                    var entriesResult = ValidateFootballDataEntries(await LoadFootballDataEntries(location, dParams), dParams);
                     if (!entriesResult.Success) 
                     {
                         errors.AppendLine(entriesResult.Message);
@@ -106,19 +105,21 @@ namespace FootballData.Loader.Loaders
             return result;
         }
 
+        protected abstract Task<IEnumerable<FootballDataEntry>> LoadFootballDataEntries(string path, FootballDataParams dParams);
+
         #endregion
 
         #region Validations
 
         private FootballDataResult<IEnumerable<FootballDataConfiguration>> ValidateDivisions(Dictionary<Country, IEnumerable<FootballDataConfiguration>> countryConfiguration, FootballDataParams dParams) 
         {
-            var result = new FootballDataResult<IEnumerable<FootballDataConfiguration>>();
+            var result = new FootballDataResult<IEnumerable<FootballDataConfiguration>>();            
 
             var configuration = countryConfiguration.Filter(dParams);
             if (!configuration.Any()) 
             {
                 result.Success = false;
-                result.Message = $"No divisions were found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
+                result.Message = FootballDataFilterError.Errors(ErrorKeys.FilterCountry, dParams);
                 return result;
             }
 
@@ -126,7 +127,7 @@ namespace FootballData.Loader.Loaders
             if (!configuration.Any())
             {
                 result.Success = false;
-                result.Message = $"Division{(!dParams.Division.HasValue ? "" : $" {dParams.Division}")} was not found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
+                result.Message = FootballDataFilterError.Errors(ErrorKeys.FilterConfiguration, dParams);
                 return result;
             }
 
@@ -143,7 +144,7 @@ namespace FootballData.Loader.Loaders
             if (!locations.Any()) 
             {
                 result.Success = false;
-                result.Message = $"No {LocationName[loaderType]} were found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
+                result.Message = FootballDataFilterError.Errors(ErrorKeys.FilterLocation1, dParams);
                 return result;
             }
 
@@ -151,7 +152,7 @@ namespace FootballData.Loader.Loaders
             if (!locations.Any())
             {
                 result.Success = false;
-                result.Message = $"No {LocationName[loaderType]} were found{(!dParams.FromYear.HasValue ? "" : $" from year: {dParams.FromYear}")}{(!dParams.ToYear.HasValue ? "" : $" to year: {dParams.ToYear}")}{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}";
+                result.Message = FootballDataFilterError.Errors(ErrorKeys.FilterLocation2, dParams);
                 return result;
             }
 
@@ -159,12 +160,6 @@ namespace FootballData.Loader.Loaders
 
             return result;
         }
-
-        private readonly Dictionary<LoaderType, string> LocationName = new Dictionary<LoaderType, string>
-        {
-            { LoaderType.Download, "endpoints" },
-            { LoaderType.Load, "filenames" }
-        };
 
         private FootballDataResult<IEnumerable<FootballDataEntry>> ValidateFootballDataEntries(IEnumerable<FootballDataEntry> footballDataEntries, FootballDataParams dParams)
         {
@@ -174,7 +169,7 @@ namespace FootballData.Loader.Loaders
             if (!footballDataEntries.Any())
             {
                 result.Success = false;
-                result.Message = $"No entries were found{(!dParams.Country.HasValue ? "" : $" for country {dParams.Country}")}{(!dParams.Division.HasValue ? "" : $" for division {dParams.Division}")}{(!dParams.FromYear.HasValue ? "" : $" from year: {dParams.FromYear}")}{(!dParams.ToYear.HasValue ? "" : $" to year: {dParams.ToYear}")}";
+                result.Message = FootballDataFilterError.Errors(ErrorKeys.FilterEntry, dParams);
                 return result;
             }
 
@@ -182,7 +177,6 @@ namespace FootballData.Loader.Loaders
 
             return result;
         }
-
 
         #endregion
     }

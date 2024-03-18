@@ -29,16 +29,22 @@ namespace FootballData.Loader.Loaders
 
         #region Load
 
-        public async Task<FootballDataResult<List<FootballDataEntry>>> LoadStatsAsync(FootballDataFileParams? dParams = default) => await LoadAsync(DataType.Statistics, dParams ?? new FootballDataFileParams());
+        public async Task<FootballDataResult<List<FootballDataEntry>>> LoadStatsAsync(FootballDataFileParams? dParams = default) 
+        {
+            return await LoadAsync(DataType.Statistics, dParams ?? new FootballDataFileParams());
+        }
 
-        public async Task<FootballDataResult<List<FootballDataEntry>>> LoadFeaturesAsync(FootballDataFileParams? dParams = default) => await LoadAsync(DataType.Features, dParams ?? new FootballDataFileParams());
+        public async Task<FootballDataResult<List<FootballDataEntry>>> LoadFeaturesAsync(FootballDataFileParams? dParams = default) 
+        {
+            return await LoadAsync(DataType.Features, dParams ?? new FootballDataFileParams());
+        }
 
         private async Task<FootballDataResult<List<FootballDataEntry>>> LoadAsync(DataType dataType, FootballDataFileParams dParams)
         {
-            return await base.Process(dataType, LoaderType.Load, dParams, Load);
+            return await base.Process(dataType, LoaderType.Load, dParams);
         }
 
-        private async Task<IEnumerable<FootballDataEntry>> Load(string filePath)
+        protected override async Task<IEnumerable<FootballDataEntry>> LoadFootballDataEntries(string filePath, FootballDataParams dParams)
         {
             var fullPath = Path.Combine(RootPath, filePath);
             if (!File.Exists(fullPath))

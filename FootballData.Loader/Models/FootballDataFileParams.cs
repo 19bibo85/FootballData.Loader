@@ -1,6 +1,4 @@
-﻿using FootballData.Loader.Enums;
-
-namespace FootballData.Loader.Models
+﻿namespace FootballData.Loader.Models
 {
     public class FootballDataFileParams : FootballDataParams
     {

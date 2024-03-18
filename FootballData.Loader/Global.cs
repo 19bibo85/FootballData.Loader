@@ -9,5 +9,5 @@
         internal const string FootballDataOtherSegment = "new";
 
         internal const string DefaultBrowserName = "FootballData Loader v1.0";
-    }
+    }    
 }

@@ -13,7 +13,7 @@ namespace FootballData.Loader.Loaders
         #region Private Members
 
         private readonly HttpClient Client;
-        private FootballDataHttpParams? DParams;
+        private string? FilePath;
 
         #endregion
 
@@ -31,17 +31,24 @@ namespace FootballData.Loader.Loaders
 
         #region Download
 
-        public async Task<FootballDataResult<List<FootballDataEntry>>> DownloadStatsAsync(FootballDataHttpParams? dParams = default) => await DownloadAsync(DataType.Statistics, dParams ?? new FootballDataHttpParams());
+        public async Task<FootballDataResult<List<FootballDataEntry>>> DownloadStatsAsync(FootballDataHttpParams? dParams = default) 
+        {
+            FilePath = dParams?.FilePath;
+            return await DownloadAsync(DataType.Statistics, dParams ?? new FootballDataHttpParams());
+        }
 
-        public async Task<FootballDataResult<List<FootballDataEntry>>> DownloadFeaturesAsync(FootballDataHttpParams? dParams = default) => await DownloadAsync(DataType.Features, dParams ?? new FootballDataHttpParams());
+        public async Task<FootballDataResult<List<FootballDataEntry>>> DownloadFeaturesAsync(FootballDataHttpParams? dParams = default) 
+        {
+            FilePath = dParams?.FilePath;
+            return await DownloadAsync(DataType.Features, dParams ?? new FootballDataHttpParams());
+        }
 
         private async Task<FootballDataResult<List<FootballDataEntry>>> DownloadAsync(DataType dataType, FootballDataHttpParams dParams)
         {
-            DParams = dParams;
-            return await base.Process(dataType, LoaderType.Download, dParams, Download);
+            return await base.Process(dataType, LoaderType.Download, dParams);
         }
 
-        private async Task<IEnumerable<FootballDataEntry>> Download(string endpoint)
+        protected override async Task<IEnumerable<FootballDataEntry>> LoadFootballDataEntries(string endpoint, FootballDataParams dParams)
         {
             using HttpResponseMessage response = await Client.GetAsync($"{Global.FootballDataEndpoint}/{endpoint}");
             using Stream stream = await response.Content.ReadAsStreamAsync();
@@ -60,11 +67,11 @@ namespace FootballData.Loader.Loaders
 
         private async Task DownloadFile(StreamReader reader, string endpoint)
         {
-            if (string.IsNullOrWhiteSpace(endpoint) || string.IsNullOrWhiteSpace(DParams?.FilePath))
+            if (string.IsNullOrWhiteSpace(endpoint) || string.IsNullOrWhiteSpace(FilePath))
                 return;
 
-            if(!Directory.Exists(DParams.FilePath))
-                Directory.CreateDirectory(DParams.FilePath);
+            if(!Directory.Exists(FilePath))
+                Directory.CreateDirectory(FilePath);
 
             var filename = endpoint;
             foreach (var segementReplacement in SegementReplacements) 
@@ -76,7 +83,7 @@ namespace FootballData.Loader.Loaders
                 return;
 
             reader.BaseStream.Position = 0;
-            using StreamWriter writer = new StreamWriter(Path.Combine(DParams.FilePath, filename));
+            using StreamWriter writer = new StreamWriter(Path.Combine(FilePath, filename));
             writer.WriteLine(await reader.ReadToEndAsync());
         }
 
