@@ -84,15 +84,15 @@ namespace FootballData.Loader.Loaders
                 return result;
             }                
 
-            var validateCountryConfigurationResult = ValidateDivisions(Configuration.CountriesFootballDataConfiguration, dParams);
-            if (!validateCountryConfigurationResult.Success) 
+            var validateCountriesConfigurationResult = ValidateCountriesConfiguration(Configuration.CountriesFootballDataConfiguration, dParams);
+            if (!validateCountriesConfigurationResult.Success) 
             {
                 result = false;
-                errorMessage = validateCountryConfigurationResult.Message;                
+                errorMessage = validateCountriesConfigurationResult.Message;                
                 return result;
             }                
 
-            var validateLocationResult = ValidateLocations(validateCountryConfigurationResult.Data, loaderType, dParams);
+            var validateLocationResult = ValidateLocations(validateCountriesConfigurationResult.Data, loaderType, dParams);
             if (!validateLocationResult.Success) 
             {
                 result = false;
@@ -111,7 +111,7 @@ namespace FootballData.Loader.Loaders
 
         #region Validations
 
-        private FootballDataResult<IEnumerable<FootballDataConfiguration>> ValidateDivisions(Dictionary<Country, IEnumerable<FootballDataConfiguration>> countryConfiguration, FootballDataParams dParams) 
+        private FootballDataResult<IEnumerable<FootballDataConfiguration>> ValidateCountriesConfiguration(Dictionary<Country, IEnumerable<FootballDataConfiguration>> countryConfiguration, FootballDataParams dParams) 
         {
             var result = new FootballDataResult<IEnumerable<FootballDataConfiguration>>();            
 

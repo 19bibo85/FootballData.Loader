@@ -1,6 +1,6 @@
 ﻿namespace FootballData.Loader.Enums
 {
-    internal enum LoaderType
+    internal enum LoaderType : byte
     {
         Download,
         Load
