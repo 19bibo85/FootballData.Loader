@@ -7,12 +7,13 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/19bibo85/FootballData.Loader</RepositoryUrl>
     <PackageTags>football;parser;</PackageTags>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>FootballData.Loader</Title>
     <Description>Library to download football data from football-data.co.uk site</Description>
     <Authors>Alberto Tosi Brandi</Authors>
     <FileVersion>1.0.0.0</FileVersion>
     <Version>1.0.3</Version>
+    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
