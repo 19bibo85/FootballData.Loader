@@ -32,7 +32,7 @@ namespace FootballData.Loader.Tests
         #endregion
 
         [Fact]
-        public void Given_an_http_loader_When_null_Then_a_nullable_expection_is_thrown()
+        public void Given_an_http_loader_When_null_Then_a_nullable_exception_is_thrown()
         {
             Assert.Throws<NullReferenceException>(() => new FootballDataHttpLoader(null));
         }
