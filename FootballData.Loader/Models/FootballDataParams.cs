@@ -2,7 +2,7 @@
 
 namespace FootballData.Loader.Models
 {
-    public abstract class FootballDataParams
+    public class FootballDataParams
     {
         public Country? Country { get; set; }
 
